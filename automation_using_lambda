@@ -1,0 +1,72 @@
+#Create a lambda function, create 2 engines(1. SQL Server 2.RDS )  
+def lambda_handler(event, context):
+		sqlalchemy.create_engine('postgresql+psycopg2://{0}:{1}@{2}:5432/{3}.'format(username,password,database,host))
+    engine = sqlalchemy.create_engine('mssql+pyodbc://user:password@ip:1433/db?driver=ODBC+Driver+17+for+SQL+Server'.format(username))
+		with engine.begin as conn:
+				query ='delete from '
+				conn.execute(query)
+
+#Write pandas dataframe to RDS        
+pandas_df.to_Sql("tablename",conn, if_exists='append', index=False)
+
+#Read data from AWS s3
+pd.read_csv(s3path) or pf.ExcelFile(s3path)
+
+#Read data from AWS s3(Event Based)
+bucketname=event['Records'][0]["s3"]["bucket"]["name"]
+filename=event['Records'][0]["s3"]["bucket"]["key"]
+obj =s3_client.get_object(Bucket,key)
+pandas.read_csv(obj['Body'],sep=',')
+
+#Read data object from AWS s3
+object = s3_client.list_objects_v2(bucketname,prefix)
+for i in object['Contents']:
+  #readFile
+
+#Move file from one s3 location to another
+s3 = boto3.resource('s3')
+bucket = s3.Bucket('bucketname')
+source = {bucket,'s3path except bucket'}
+target = bucket.object('path')
+target.copy(source)
+3.object(bucket,'path').delete()
+    
+#Rollback transaction on failure 
+with engine as conn:
+	try:
+		savepoint = conn.begin_nested()
+		query =''
+		conn.execute(query)
+    query2 =''
+    conn.execute(query2)
+    
+	except:
+		do something
+	savepoint.commit()
+ 
+ #Add Layers- Pandas, xlrd, s3fs, sqlAlchemy,psycopg2
+	1. Folder structure- python/lib/python3.7/site-packages/psycopg2/
+ 
+ #Cron Job
+  30 5,10 4-10 * ? * (In GMT)
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
