@@ -1,0 +1,147 @@
+import pyspark
+import pandas as pd
+
+from pyspark import SparkContext, SparkConf
+from pyspark.sql.types import IntegerType
+from pyspark.sql.functions import udf
+import pyspark.sql.functions as F
+from pyspark.sql.window import Window
+
+conf = SparkConf()
+sc = SparkContext(conf=conf)
+sc.setLogLevel("WARN")
+from pyspark.sql import SQLContext
+sqlContext=SQLContext(sc)
+data = sc.textFile('docker.txt')
+
+1. word Count
+abb = data.flatMap(lambda x:x.split(' '))
+abb.map(lambda x:(x,1)).reduceByKey(lambda x,y:x+y).collect()
+
+2. 
+log_txt=sc.textFile("/path/to/data/sample_data.txt")
+header = log_txt.first()
+#filter out the header, make sure the rest looks correct
+log_txt = log_txt.filter(lambda line: line != header)
+log_txt.take(10)  #o/p-> [u'0\\tdog\\t20160906182001\\tgoogle.com', u'1\\tcat\\t20151231120504\\tamazon.com']
+temp_var = log_txt.map(lambda k: k.split("\\t"))
+#rdd to DF
+log_df=temp_var.toDF(header.split("\\t"))
+log_df.show()
+
+
+3. Pandas df to SparkDF
+df_pd = pd.DataFrame(
+    data={'integers': [1, 2, 3],
+     'floats': [22, 33, 45],
+     'integer_arrays': [[1, 2], [3, 4, 5], [6, 7, 8, 9]]}
+)
+df = sqlContext.createDataFrame(df_pd)
+df.show()
++--------+------+--------------+
+|integers|floats|integer_arrays|
++--------+------+--------------+
+|       1|    22|        [1, 2]|
+|       2|    33|     [3, 4, 5]|
+|       3|    45|  [6, 7, 8, 9]|
++--------+------+--------------+
+
+4. UDF
+def add_two(str1,str2):
+    return str1+str2
+add_twp_udf = udf(add_two,IntegerType())    
+
+df.withColumn('add_int_flot',add_twp_udf(df.integers,df.floats)).show()
++--------+------+--------------+------------+
+|integers|floats|integer_arrays|add_int_flot|
++--------+------+--------------+------------+
+|       1|    22|        [1, 2]|          23|
+|       2|    33|     [3, 4, 5]|          35|
+|       3|    45|  [6, 7, 8, 9]|          48|
++--------+------+--------------+------------+
+
+5. 
+data = [('Foo',10,'US',3),\
+                ('Foo',39,'UK',1),\
+                ('Bar',57,'IN',2),\
+                ('Bar',72,'CA',2),\
+                ('Baz',22,'US',6),\
+                ('Baz',23,'UK',6)]
+df = sqlContext.createDataFrame(data,['name','age','country','id']) 
+
+df.withColumnRenamed('name', 'firstname').show()
+
+df.filter(df.name == 'Foo').drop('age').show()
+
+df2 = df.dropDuplicates(subset=['name'])
+
+df.drop('id').join(df2.drop('id'),df.name==df2.name,'inner').show()
+
+df.printSchema()
+
+df.select('name','age').show()
+
+df.sort('name','id').show()
+
+df.withColumn('age category',F.when((F.col('age')>10)&(F.col('age')<70),'Adult').otherwise('NA')).fillna({"age category":0}).show()
+
+df1 = df.withColumn("id1",col("id").cast(IntegerType()))
+
+
+6.
+df.groupBy(df.name).agg(F.sum('age')).show()
++----+--------+
+|name|sum(age)|
++----+--------+
+| Bar|     129|
+| Foo|      49|
+| Baz|      45|
++----+--------+
+df.withColumn('sum age',F.sum('age').over(Window.partitionBy('name'))).show()
++----+---+-------+---+-------+
+|name|age|country| id|sum age|
++----+---+-------+---+-------+
+| Bar| 57|     IN|  2|    129|
+| Bar| 72|     CA|  2|    129|
+| Foo| 10|     US|  3|     49|
+| Foo| 39|     UK|  1|     49|
+| Baz| 22|     US|  6|     45|
+| Baz| 23|     UK|  6|     45|
++----+---+-------+---+-------+
+
+7.
+df.groupBy('country')\
+    .agg(F.count('id').alias('count of id'),
+        F.sum('age').alias('sum of age')
+       )\
+    .filter('`sum of age`>40')\
+    .orderBy('sum of age',ascending=False) \
+    .withColumnRenamed('sum of age','Aggregated age') \
+    .withColumn('Age Classified',F.when(F.col('Aggregated age')>60,'Senior'). otherwise('Adult')) \
+    .show()
+ +-------+-----------+--------------+--------------+
+|country|count of id|Aggregated age|Age Classified|
++-------+-----------+--------------+--------------+
+|     CA|          1|            72|        Senior|
+|     UK|          2|            62|        Senior|
+|     IN|          1|            57|         Adult|
++-------+-----------+--------------+--------------+
+
+8.
+sqlContext.registerFunction("FindMax",lambda x:"Y" if x>1 else "N",StringType())
+df.registerTempTable('dff')
+query = "select *, FindMax(row_number() over(partition by country order by age)) as general from dff"
+finaldf = sqlContext.sql(query)
+finaldf.show()
++--------+---+-------+---+-------+
+|    name|age|country| id|general|
++--------+---+-------+---+-------+
+|Veronica| 72|     CA|  2|      N|
+|     Foo| 10|     US|  3|      N|
+|Bazzigar| 22|     US|  6|      Y|
+|    BarF|  5|     IN|  2|      N|
+|     BaF| 51|     IN|  2|      Y|
+|    BarF| 57|     IN|  2|      Y|
+|Southern| 23|     UK|  6|      N|
+|  FooBar| 39|     UK|  1|      Y|
++--------+---+-------+---+-------+
