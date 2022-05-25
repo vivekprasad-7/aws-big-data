@@ -1,0 +1,1 @@
+spark-submit --deploy-mode client --master local  --py-files dependencies.zip user_analysis.py main.py
