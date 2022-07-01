@@ -1,10 +1,14 @@
+How data is accessed from Datacenter to AWS
+
+
+
 |||||||||||||||||||||        ||||||||||||||||||||||        ||||||||||||||||||||||        
 |                   |        |  VPC+              |        |                    |     
 | Customer Gateway  |--------|  Customer Gateway+ |--------|  Virtual Private   |
 |                   |        |  Vir.Pvt. Gateway+ |        |      Gateway       |
 |||||||||||||||||||||        ||||||||||||||||||||||        ||||||||||||||||||||||
 (Hardware on 
-On-Prem Datacenter)           (Site to Site VPN)                      |
+On-Prem Datacenter)           (Site to Site VPN/ipsec)                |
                                                                       |
                                                                       |
                                                                       |
