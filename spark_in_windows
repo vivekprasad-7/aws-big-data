@@ -9,5 +9,4 @@ https://phoenixnap.com/kb/install-spark-on-windows-10
 Pycharm Integration Guide
 https://gongster.medium.com/how-to-use-pyspark-in-pycharm-ide-2fd8997b1cdd
 
-1. Add SPARK, HADOOP, JAVA environment variable in pycharm environment variable 
-2. Add content root in project structure of spark
+1. Add content root in project structure of spark
