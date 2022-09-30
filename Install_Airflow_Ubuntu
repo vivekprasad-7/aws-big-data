@@ -1,18 +1,18 @@
 url- 
 https://www.hackerxone.com/2021/10/15/steps-to-install-and-setup-apache-airflow-on-ubuntu-20-04-lts/?unapproved=852&moderation-hash=49b4af5bc6a53326702339721e1183d3#comment-852
 
-apt-get update
-apt-get install software-properties-common
-apt-add-repository universe
-apt-get update
-apt-get install python-setuptools
-apt install python3-pip
+sudo apt-get update
+sudo apt-get install software-properties-common
+sudo apt-add-repository universe
+sudo apt-get update
+sudo apt-get install python-setuptools
+sudo apt install python3-pip
 
-apt-get install libmysqlclient-dev
-apt-get install libssl-dev
-apt-get install libkrb5-dev
+sudo apt-get install libmysqlclient-dev
+sudo apt-get install libssl-dev
+sudo apt-get install libkrb5-dev
 
-apt install python3-virtualenv
+sudo apt install python3-virtualenv
 virtualenv airflow_example
 
 cd airflow_example/bin/
