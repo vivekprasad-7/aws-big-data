@@ -29,4 +29,5 @@ airflow users create --username admin --firstname admin --lastname testing --rol
 airflow webserver -p 8080
 
 --set inbound rule in case of EC2
-http://server-ip:8080
+--use URL http://server-ip:8080 
+--User data is nit working for Ubuntu; airflow setup not working in amazon linux ami
