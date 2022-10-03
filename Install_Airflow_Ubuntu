@@ -27,6 +27,7 @@ airflow db init
 airflow users create --username admin --firstname admin --lastname testing --role Admin --email admin@domain.com
 
 airflow webserver -p 8080
+airflow scheduler
 
 --set inbound rule in case of EC2
 --use URL http://server-ip:8080 
