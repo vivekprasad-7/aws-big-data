@@ -1,0 +1,43 @@
+Why Lazy Evaluation(Spark) is Useful?
+
+1. Lazy evaluaion in python
+
+Python 2
+>>> r = range(10)
+>>> print r
+[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+Python 3
+>>> r = range(10)
+>>> print(r)
+range(0, 10)
+>>> print(r[3])
+3
+
+Lazy evaluation saves execution time 
+for large ranges which may never be fully referenced and memory usage for large ranges where only one or a few elements are needed at any time.
+
+2. Spark’s Catalyst Optimizer
+  When performing different transformations, Spark will store them in a Directed Acyclic Graph (or DAG)
+  Once the DAG is constructed, Spark’s catalyst optimizer will perform a set of rule-based and cost-based optimizations
+  to determine a logical and then physical plan of execution.
+  
+  1. Improve Efficiency
+  Spark’s Catalyst optimizer will group operations together, reducing the number of passes on data and improving performance.
+  One more advantage of the catalyst optimizer is that, often, values that won’t be used for the final result, will simply not be computed.
+  
+  gender_mapping = create_map([lit(x) for x in chain(*mapping.items())])
+  df.withColumn('gender', gender_mapping.getItem(F.col("name")))\  # First definition
+  .withColumn('gender', F.lit('Unknown'))\  # Second definition: overwrite the first one
+  .explain(True) 
+  
+  Spark will automatically group these operations together and therefore ignore the first definition as it is not actually used in the final result.
+  https://www.projectpro.io/recipes/explain-spark-lazy-evaluation-detail 
+ 
+ 3.  Memory Management
+  If Spark’s transformations were eager, you would have to store all the intermediate Dataframes/RDDs somewhere or at the very least managing memory 
+  will become another concern. With Lazy Evaluation, Spark will only store intermediate results for the time they are actually needed.
+  Obviously, we could circumvent this behavior manually if needed by caching or exporting the results.
+  
+  However, it also comes with some setbacks.  An example would be exception handling: If an error occurs during runtime, Spark will only show it when 
+  an action is used. Since the order of operations is not determinate, this makes it hard to know which exact transformation caused it.
