@@ -22,3 +22,22 @@ for i in range(total_items):
     else:
         continue
     break
+
+2.
+
+'''Given an array of size N-1 such that it only contains distinct integers
+in the range of 1 to N. Find the missing element.
+
+Input:
+N = 5
+A[] = {1,2,3,5}
+Output: 4
+'''
+
+list1 = [3,4,5,7]
+l_l = len(list1)
+sum = list1[0]
+for i in range(l_l):
+    if(list1[i]!=sum):
+        print(sum)
+    sum+=1
