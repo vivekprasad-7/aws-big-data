@@ -1,0 +1,24 @@
+1.
+
+'''
+Given an unsorted array A of size N
+that contains only non-negative integers,
+find a continuous sub-array which adds to a given number S.
+
+Input:
+N = 5, S = 12
+A[] = {1,2,3,7,5}
+'''
+list_1 = [1,2,3,7,5]
+val = 13
+total_items = len(list_1)
+for i in range(total_items):
+    tem_store = 0
+    for j in range(i,total_items):
+        tem_store+=list_1[j]
+        if(tem_store==val):
+            print("start and end is {0},{1} ".format(list_1[i],list_1[j]))
+            break
+    else:
+        continue
+    break
