@@ -9,6 +9,7 @@ Input:
 N = 5, S = 12
 A[] = {1,2,3,7,5}
 '''
+----------------------------------------------------------------------------------------
 list_1 = [1,2,3,7,5]
 val = 13
 total_items = len(list_1)
@@ -22,7 +23,7 @@ for i in range(total_items):
     else:
         continue
     break
-
+----------------------------------------------------------------------------------------
 2.
 
 '''Given an array of size N-1 such that it only contains distinct integers
@@ -33,7 +34,7 @@ N = 5
 A[] = {1,2,3,5}
 Output: 4
 '''
-
+----------------------------------------------------------------------------------------
 list1 = [3,4,5,7]
 l_l = len(list1)
 sum = list1[0]
@@ -41,7 +42,7 @@ for i in range(l_l):
     if(list1[i]!=sum):
         print(sum)
     sum+=1
-
+----------------------------------------------------------------------------------------
 3.
 
 '''
@@ -61,7 +62,7 @@ After merging the two
 non-decreasing arrays, we get,
 0 1 2 3 5 6 7 8 9.
 '''
-
+----------------------------------------------------------------------------------------
 
 arr1 = [1,3,5,7]
 arr2 = [0,2,6,8,9]
@@ -77,7 +78,7 @@ for i in range(n,len(arr1)):
     arr2.append(arr1[i])
 print(arr1)
 print(arr2)
-
+----------------------------------------------------------------------------------------
 4.
 
 '''
@@ -97,6 +98,7 @@ as such: 2 to the power 1 > 1 to the power 2,  2 to the power 5 > 5 to the power
 and 6 to the power 1 > 1 to the power  6.
 
 '''
+----------------------------------------------------------------------------------------
 x = [2,3,4,5]
 y = [1,2,3]
 count=0
@@ -107,3 +109,31 @@ for i in range(0,len(x)):
             count+=1
 
 print(count)
+----------------------------------------------------------------------------------------
+5.
+'''
+Given an array A of positive integers.
+Your task is to find the leaders in the array.
+An element of array is leader if it is greater than
+or equal to all the elements to its right side.
+The rightmost element is always a leader
+
+Input:
+n = 6
+A[] = {16,17,4,3,5,2}
+Output: 17 5 2
+'''
+----------------------------------------------------------------------------------------
+a = [16,17,4,3,5,2]
+
+
+for i in range(0,len(a)):
+    check = 0
+    for j in range(i+1,len(a)):
+        if(a[i]<a[j]):
+            check=1
+
+    if(check==0):
+        print("leader is {0}".format(a[i]))
+
+----------------------------------------------------------------------------------------
