@@ -137,7 +137,7 @@ for i in range(0,len(a)):
         print("leader is {0}".format(a[i]))
 
 ----------------------------------------------------------------------------------------
-7.
+6.
 '''
 Given an array arr[] of positive integers of size N.
 Reverse every sub-array group of size K.
@@ -153,6 +153,8 @@ Output: 3 2 1 5 4
 Explanation: First group consists of elements
 1, 2, 3. Second group consists of 4,5.
 '''
+----------------------------------------------------------------------------------------
+
 import math
 arr = [1,2,3,4,5,6,7,8,9,10]
 K = 4
@@ -180,3 +182,31 @@ for i in range(0, grp_count):
         #set last index of the list
         end_index = N
 print(result_list)
+----------------------------------------------------------------------------------------
+
+7.
+'''
+Given an array arr[] and an integer K where K is smaller than size of array,
+the task is to find the Kth smallest element in the given array.
+It is given that all array elements are distinct.
+
+Example 1:
+
+Input:
+N = 6
+arr[] = 7 10 4 3 20 15
+K = 3
+Output : 7
+Explanation :
+3rd smallest element in the given
+array is 7.
+'''
+----------------------------------------------------------------------------------------
+
+arr = [7,10,4,3,20,15]
+K = 4
+arr.sort()
+print(arr)
+print(arr[K-1])
+----------------------------------------------------------------------------------------
+
