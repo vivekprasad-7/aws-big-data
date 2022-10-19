@@ -137,3 +137,46 @@ for i in range(0,len(a)):
         print("leader is {0}".format(a[i]))
 
 ----------------------------------------------------------------------------------------
+7.
+'''
+Given an array arr[] of positive integers of size N.
+Reverse every sub-array group of size K.
+Note: If at any instance, there are no more subarrays of size greater than or equal to K,
+then reverse the last subarray (irrespective of its size).
+
+Example 1:
+
+Input:
+N = 5, K = 3
+arr[] = {1,2,3,4,5}
+Output: 3 2 1 5 4
+Explanation: First group consists of elements
+1, 2, 3. Second group consists of 4,5.
+'''
+import math
+arr = [1,2,3,4,5,6,7,8,9,10]
+K = 4
+N = 10
+result_list = []
+
+grp_count = math.ceil(len(arr)/K) #For Looping purpose
+start_index = 0
+end_index = K
+for i in range(0, grp_count):
+    temp_ls = []
+    print("start_index is {0}".format(start_index))
+    print("end_index is {0}".format(end_index))
+
+    for j in range(start_index,end_index):
+        temp_ls.append(arr[j])
+
+    temp_ls.reverse()
+    result_list.append(temp_ls)
+
+    start_index = start_index+K
+    end_index = end_index+K
+
+    if(end_index>N):
+        #set last index of the list
+        end_index = N
+print(result_list)
