@@ -77,3 +77,33 @@ for i in range(n,len(arr1)):
     arr2.append(arr1[i])
 print(arr1)
 print(arr2)
+
+4.
+
+'''
+Given two arrays X and Y of positive integers,
+find the number of pairs such that xy > yx (raised to power of)
+where x is an element from X and y is an element from Y.
+
+Example 1:
+
+Input:
+M = 3, X[] = [2 1 6]
+N = 2, Y[] = [1 5]
+Output: 3
+Explanation:
+The pairs which follow xy > yx are
+as such: 2 to the power 1 > 1 to the power 2,  2 to the power 5 > 5 to the power 2
+and 6 to the power 1 > 1 to the power  6.
+
+'''
+x = [2,3,4,5]
+y = [1,2,3]
+count=0
+for i in range(0,len(x)):
+    for j in range(0,len(y)):
+        if(pow(x[i],y[j])>pow(y[j],x[i])):
+            print("val is {0} {1}".format(x[i],y[j]))
+            count+=1
+
+print(count)
