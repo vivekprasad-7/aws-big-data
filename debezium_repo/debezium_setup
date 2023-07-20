@@ -1,0 +1,45 @@
+--GRANT ALL PRIVILEGES ON *.* TO 'debezium'@'%' IDENTIFIED BY 'dbz';
+sudo apt-get update
+sudo apt-get install mysql-server
+sudo mysql -u root -p
+CREATE USER 'debezium'@'%' IDENTIFIED BY 'dbz';
+GRANT ALL PRIVILEGES ON *.*  TO 'debezium'@'%'; 
+FLUSH PRIVILEGES;
+#add rule all ipv4 mysql in mysql server 
+ 
+--set @@global.show_compatibility_56=ON;
+--SELECT variable_value as "BINARY LOGGING STATUS (log-bin) ::" FROM information_schema.global_variables WHERE variable_name='log_bin';
+sudo apt-get  update
+sudo apt-get install openjdk-8-jdk
+wget https://mirrors.estointernet.in/apache/zookeeper/zookeeper-3.8.0/apache-zookeeper-3.8.0-bin.tar.gz
+
+tar -xvzf apache-zookeeper-3.8.0-bin.tar.gz
+
+mv apache-zookeeper-3.8.0-bin zookeeper
+mv zookeeper/conf/zoo_sample.cfg zookeeper/conf/zoo.cfg
+
+----wget https://mirrors.estointernet.in/apache/kafka/3.2.0/kafka-3.2.0-src.tgz
+wget https://mirrors.estointernet.in/apache/kafka/3.2.0/kafka_2.12-3.2.0.tgz
+
+tar -xvzf kafka_2.12-3.2.0.tgz
+mv kafka_2.12-3.2.0  kafka
+--wget https://repo1.maven.org/maven2/io/debezium/debezium-connector-mysql/2.2.1.Final/debezium-connector-mysql-2.2.1.Final-plugin.tar.gz
+wget https://repo1.maven.org/maven2/io/debezium/debezium-connector-mysql/1.3.1.Final/debezium-connector-mysql-1.3.1.Final-plugin.tar.gz
+--tar -xvzf debezium-connector-mysql-2.2.1.Final-plugin.tar.gz
+tar -xvzf debezium-connector-mysql-1.3.1.Final-plugin.tar.gz
+
+sudo mkdir /kafka
+sudo mkdir /kafka/connect
+sudo mv debezium-connector-mysql /kafka/connect
+vi kafka/config/connect-standalone.properties
+plugin.path=/kafka/connect 
+vi kafka/config/connect-debezium-mysql.properties
+kafka/bin/zookeeper-server-start.sh kafka/config/zookeeper.properties
+kafka/bin/kafka-server-start.sh kafka/config/server.properties
+-----kafka/bin/kafka-topics.sh --list --zookeeper localhost:2181
+----kafka/bin/kafka-topics.sh --create --topic quickstart-events --bootstrap-server localhost:9092
+
+kafka/bin/kafka-topics.sh --list --bootstrap-server localhost:9092
+kafka/bin/connect-standalone.sh kafka/config/connect-standalone.properties kafka/config/connect-debezium-mysql.properties
+
+kafka/bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic mysql.konnect.test --from-beginning
