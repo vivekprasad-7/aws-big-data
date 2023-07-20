@@ -1,0 +1,17 @@
+name=test-connector
+connector.class=io.debezium.connector.mysql.MySqlConnector
+database.hostname=172.31.15.5
+database.port=3306
+database.user=debezium
+database.password=dbz
+database.server.id=1
+database.server.name=mysql
+database.include.list=konnect
+table.include.list=konnect.test
+database.history.kafka.bootstrap.servers=localhost:9092
+database.history.kafka.topic=dbhistory.test
+include.schema.changes=true
+tombstones.on.delete=false
+database.allowPublicKeyRetrieval=true
+transforms= unwrap
+transforms.unwrap.type= io.debezium.transforms.ExtractNewRecordState
