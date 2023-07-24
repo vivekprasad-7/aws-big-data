@@ -1,0 +1,15 @@
+👉 Simplify Big Data Tech Blog
+
+Demystifying SCD Type 2 in Redshift.
+
+Data loading is one of the key aspects of maintaining a data warehouse.
+
+During each data load, incoming change records are matched against existing active records, comparing each attribute value to determine whether existing records have
+💠 Changed
+💠 Deleted
+💠 or new records created.
+
+Once you understand SCD process, it will became very easy for you to understand below blog.
+
+Blog Link
+https://lnkd.in/dHJxTu9H

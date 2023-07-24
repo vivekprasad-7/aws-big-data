@@ -1,0 +1,10 @@
+3 Things to learn from below project implementation
+
+1️⃣ OOP Design Thought Process - Using inheritance from base schema, created schemas for different ML algorithms. Existing JSON based schema (for media asset) were used to create schema of annotation object and annotation data.
+2️⃣ Clarity of goals while creating any new service- low latency for CRUD and search operation
+3️⃣ Scaling requirement and choice of Database (Tech Stack enablement)- Should complement expertise in the team.
+
+I have tried converting Annotation Introduction using flowchart
+
+👉 Blog can be read from below link
+https://lnkd.in/dmNY4diT
