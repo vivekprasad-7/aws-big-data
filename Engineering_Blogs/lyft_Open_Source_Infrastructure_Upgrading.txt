@@ -1,0 +1,27 @@
+https://eng.lyft.com/trino-open-source-infrastructure-upgrading-at-lyft-83f26b099fa
+How *Lyft* provide latest *Trino* features and Infrastructure *upgrades*?
+
+(Can be applicable to any open source stack)
+
+Lyft processed nearly 250K queries with 50PB of data. They uses Trino for interactive query, dash-boarding, reporting and ETL jobs.
+
+Steps
+👉 *Compatibility Testing*
+
+Team chooses a build version( not the latest version). They reviews the release note and select a version with more critical features.
+
+Then pulls the branch of selected release and cherry-picks patches that needed to apply.
+
+Minor changes would require to either disable unit tests or adjust to the features
+
+👉 *Performance test*
+
+Observe read-only compute intensive production query on new release for a week and compare with previous version.
+
+If there is any significant regression in the newer version go for
+
+👉 *Troubleshooting*
+
+There might be default config changes which may not documented in the release notes. We can either fix the regression or reverted the change.
+
+👉 Note- there might be regression in between the two versions ex- while trying to upgrade from 359 and 365, there might be problems in version 360. In that case each release from 360 to 365 should be tested.
